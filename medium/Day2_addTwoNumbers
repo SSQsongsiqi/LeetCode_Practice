@@ -1,0 +1,62 @@
+#题目：
+给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+请你将两个数相加，并以相同形式返回一个表示和的链表。
+你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+#解答
+#注意最后的进位：如果两个链表同时结束了，但是最后一次相加产生了一个进位，此时前两条链指针都为空，但我们其实还需要在第三条链的末尾再补一个值进位新节点。
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        curr = dummy
+        carry = 0
+        
+        while l1 is not None or l2 is not None or carry > 0:
+            x = l1.val if l1 is not None else 0
+            y = l2.val if l2 is not None else 0
+
+            total = x + y + carry       
+            carry = total // 10         
+            curr.next = ListNode(total % 10) 
+            curr = curr.next  
+
+            if l1 is not None: l1 = l1.next
+            if l2 is not None: l2 = l2.next
+            
+        return dummy.next 
+
+
+
+  错误第一版（用作警醒的屎山）：
+  class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+      int dummy，l1，l2
+      curr = dummy
+      carry = 0
+      while ((l1 != null)&(l2 != null )):
+        if (l1+l2)<10:
+        curr.next = l1 + l2 + carry
+        carry = carry - 1
+        curr = curr.next
+        l1 = l1.next
+        l2 = l2.next
+        else:
+        carry = carry + 1
+        return curr
+    
+      while ((l1 = null)&(l2 != null)):
+        curr = carry + l2
+        curr = curr.next
+        l2 = l2.next
+        return curr
+      
+      while ((l1 != null)&(l2 = null)):
+        curr = carry + l1
+        curr = curr.next
+        l1 = l1.next
+        return curr
+      
+      if ((l1 = null)&(l2 = null)):
+        curr.next = carry
+        curr = curr.next
+        return curr
