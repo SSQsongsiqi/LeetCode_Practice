@@ -41,7 +41,34 @@ class Solution:
                     row.append(s[i])
         return "".join(row)
 
+# 模拟法
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        # 只有一行时，不需要进行 Z 字形转换
+        if numRows == 1 or numRows >= len(s):
+            return s
 
+        # 每个列表存放一行的字符
+        rows = [[] for _ in range(numRows)]
+
+        current_row = 0 # 表示当前行
+        direction = 1  # 1 表示向下，-1 表示向上
+
+        for char in s:
+            rows[current_row].append(char)
+
+            # 到达第一行，接下来向下走
+            if current_row == 0:
+                direction = 1
+
+            # 到达最后一行，接下来向上走
+            elif current_row == numRows - 1:
+                direction = -1
+
+            current_row += direction
+
+        # 先拼接每一行，再把所有行拼接起来
+        return "".join("".join(row) for row in rows)
 
 
                     
