@@ -1,7 +1,7 @@
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
         result = []
-        p_count = Counter(p)
+        p_count = Counter(p)      # 统计P中每个字符出现的次数。 eg：输入 p = "abc"，得到 {'a': 1, 'b': 1, 'c': 1}
         window_count = Counter()
 
         left = 0
